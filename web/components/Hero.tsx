@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import TechBackground from "./TechBackground";
 
 export default function Hero() {
     return (
         <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
+            <TechBackground />
+
             <div className="max-w-[100rem] z-10 mt-20">
                 {/* Role Label */}
                 <motion.div
@@ -16,7 +19,7 @@ export default function Hero() {
                 >
                     <div className="h-[1px] w-12 bg-zinc-500" />
                     <span className="text-sm md:text-base tracking-[0.2em] uppercase text-zinc-400 font-medium">
-                        Frontend Developer & UI Designer
+                        Full Stack Developer & Software Engineer
                     </span>
                 </motion.div>
 
@@ -46,15 +49,35 @@ export default function Hero() {
 
                 {/* Bottom Details */}
                 <div className="flex flex-col md:flex-row justify-between items-end mt-12 md:mt-24 gap-8">
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="max-w-md text-lg md:text-xl text-zinc-400 font-light leading-relaxed"
-                    >
-                        Based in <span className="text-zinc-100 font-medium">New Delhi</span>.
-                        Creating digital experiences that blend <span className="italic font-serif">aesthetics</span> with function.
-                    </motion.p>
+                    <div className="flex flex-col gap-6">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className="max-w-md text-lg md:text-xl text-zinc-400 font-light leading-relaxed"
+                        >
+                            Based in <span className="text-zinc-100 font-medium">New Delhi, India</span>.
+                            Specializing in <span className="text-zinc-200">Java, React, & Node.js</span>.
+                            Building scalable backend services and responsive UI components.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.5 }}
+                            className="flex gap-4"
+                        >
+                            <a href="https://github.com/AnshitSharma" target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
+                                <Github className="w-5 h-5 text-zinc-300" />
+                            </a>
+                            <a href="https://linkedin.com/in/anshitsharma" target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
+                                <Linkedin className="w-5 h-5 text-zinc-300" />
+                            </a>
+                            <a href="mailto:anshitsharma82002@gmail.com" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
+                                <Mail className="w-5 h-5 text-zinc-300" />
+                            </a>
+                        </motion.div>
+                    </div>
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
