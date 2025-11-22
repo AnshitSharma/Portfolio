@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import TechBackground from "./TechBackground";
+import RoleRotator from "./RoleRotator";
 
 export default function Hero() {
     return (
@@ -18,9 +19,7 @@ export default function Hero() {
                     className="flex items-center gap-4 mb-8"
                 >
                     <div className="h-[1px] w-12 bg-zinc-500" />
-                    <span className="text-sm md:text-base tracking-[0.2em] uppercase text-zinc-400 font-medium">
-                        Full Stack Developer & Software Engineer
-                    </span>
+                    <RoleRotator />
                 </motion.div>
 
                 {/* Massive Typography Name */}
