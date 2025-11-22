@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, MapPin } from "lucide-react";
+import ExperienceCard from "./ExperienceCard";
 
 const experiences = [
     {
@@ -40,40 +40,32 @@ export default function Experience() {
                 <div className="h-[1px] w-24 bg-zinc-800" />
             </motion.div>
 
-            <div className="relative border-l border-zinc-800 ml-4 md:ml-12 space-y-16">
+            <div className="grid grid-cols-1 gap-12 md:gap-16 relative">
+                {/* Connecting Line (Visual only, simplified for card layout) */}
+                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-zinc-800 to-transparent hidden md:block" />
+
                 {experiences.map((exp, index) => (
                     <motion.div
                         key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: index * 0.2 }}
-                        className="relative pl-8 md:pl-16"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.8, delay: index * 0.2 }}
+                        className={`flex flex-col md:flex-row gap-8 items-center ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
                     >
-                        {/* Timeline Dot */}
-                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-zinc-100 ring-4 ring-zinc-900" />
-
-                        <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8 mb-4">
-                            <h3 className="text-2xl md:text-3xl font-medium text-zinc-100">{exp.company}</h3>
-                            <span className="text-lg text-zinc-400 font-light">{exp.role}</span>
+                        {/* Card Side */}
+                        <div className="w-full md:w-1/2 perspective-1000">
+                            <ExperienceCard {...exp} />
                         </div>
 
-                        <div className="flex flex-wrap gap-6 text-sm text-zinc-500 uppercase tracking-wider mb-6">
-                            <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4" />
-                                {exp.period}
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4" />
-                                {exp.location}
-                            </div>
+                        {/* Timeline Dot (Center) */}
+                        <div className="relative hidden md:flex items-center justify-center w-8 h-8">
+                            <div className="w-3 h-3 rounded-full bg-zinc-100 shadow-[0_0_10px_rgba(255,255,255,0.5)] z-10" />
+                            <div className="absolute w-8 h-8 rounded-full bg-zinc-800/50 animate-ping opacity-20" />
                         </div>
 
-                        <ul className="space-y-4 text-zinc-400 leading-relaxed max-w-3xl list-disc list-outside ml-4">
-                            {exp.description.map((item, i) => (
-                                <li key={i}>{item}</li>
-                            ))}
-                        </ul>
+                        {/* Empty Side for Balance */}
+                        <div className="w-full md:w-1/2 hidden md:block" />
                     </motion.div>
                 ))}
             </div>

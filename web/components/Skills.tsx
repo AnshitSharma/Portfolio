@@ -1,12 +1,13 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
     SiReact, SiNodedotjs, SiTypescript, SiJavascript, SiPython,
     SiMongodb, SiPostgresql, SiDocker, SiGit, SiTailwindcss,
     SiNextdotjs, SiHtml5, SiCss3, SiMysql, SiCplusplus
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
+import SkillsOrbit from "./SkillsOrbit";
 
 const skills = [
     { name: "Java", icon: FaJava, color: "#007396" },
@@ -27,65 +28,21 @@ const skills = [
     { name: "CSS3", icon: SiCss3, color: "#1572B6" },
 ];
 
-function SkillCard({ skill, index }: { skill: typeof skills[0], index: number }) {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
-    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
-
-    function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-        const { left, top } = currentTarget.getBoundingClientRect();
-        x.set(clientX - left);
-        y.set(clientY - top);
-    }
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
-            onMouseMove={onMouseMove}
-            onMouseLeave={() => {
-                x.set(0);
-                y.set(0);
-            }}
-            className="group relative flex flex-col items-center justify-center p-6 bg-zinc-900/30 border border-zinc-800/50 rounded-2xl overflow-hidden hover:bg-zinc-800/50 transition-colors"
-        >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-            <skill.icon
-                className="w-12 h-12 mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-2"
-                style={{ color: skill.color }}
-            />
-
-            <span className="text-zinc-400 font-medium tracking-wide group-hover:text-zinc-100 transition-colors">
-                {skill.name}
-            </span>
-        </motion.div>
-    );
-}
-
 export default function Skills() {
     return (
-        <section className="py-32 px-6 md:px-12 lg:px-24 max-w-[100rem] mx-auto">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="mb-20"
-            >
-                <h2 className="text-4xl md:text-6xl font-serif text-zinc-100 mb-6">Technical Arsenal</h2>
-                <div className="h-[1px] w-24 bg-zinc-800" />
-            </motion.div>
+        <section className="py-20 relative overflow-hidden min-h-screen flex flex-col justify-center">
+            {/* Background Elements */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none" />
 
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-                {skills.map((skill, index) => (
-                    <SkillCard key={index} skill={skill} index={index} />
-                ))}
-            </div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+                className="w-full"
+            >
+                <SkillsOrbit skills={skills} />
+            </motion.div>
         </section>
     );
 }
