@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import Spotlight from "@/components/Spotlight";
+import { Analytics } from "@vercel/analytics/react";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <SmoothScroll>
           <div className="noise-bg" />
           {children}
+          <Analytics />
         </SmoothScroll>
       </body>
     </html>

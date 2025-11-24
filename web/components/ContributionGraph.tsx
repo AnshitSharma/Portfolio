@@ -46,19 +46,19 @@ export default function ContributionGraph() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-900/10 via-zinc-950 to-zinc-950 -z-10" />
             <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20 pointer-events-none" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-                {/* Left Column: Header & Stats */}
-                <div className="lg:col-span-1 space-y-8">
+            <div className="flex flex-col gap-16">
+                {/* Header & Stats */}
+                <div className="space-y-8 text-center">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-4">
                             Open Source
                         </h2>
-                        <p className="text-zinc-400 text-lg leading-relaxed">
+                        <p className="text-zinc-400 text-lg leading-relaxed max-w-2xl mx-auto">
                             Contributing to the ecosystem that built the web.
                             <span className="text-emerald-400/80 block mt-2 font-mono text-sm">
                                 &gt; git commit -m "make it better"
@@ -66,17 +66,17 @@ export default function ContributionGraph() {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                         {stats.map((stat, index) => (
                             <StatCard key={index} stat={stat} index={index} />
                         ))}
                     </div>
                 </div>
 
-                {/* Right Column: Graph */}
+                {/* Graph */}
                 <motion.div
-                    className="lg:col-span-2 relative"
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    className="relative w-full max-w-5xl mx-auto"
+                    initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
@@ -96,8 +96,8 @@ export default function ContributionGraph() {
                                     labels={{
                                         totalCount: '{{count}} contributions in the last year',
                                     }}
-                                    blockSize={13}
-                                    blockMargin={4}
+                                    blockSize={12}
+                                    blockMargin={3}
                                     fontSize={14}
                                     showWeekdayLabels
                                     style={{ width: '100%', height: 'auto' }}
