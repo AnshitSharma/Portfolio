@@ -9,28 +9,81 @@ export default function ContributionGraph() {
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [totalContributions, setTotalContributions] = useState(0);
+    const [currentStreak, setCurrentStreak] = useState(0);
+    const [repoCount, setRepoCount] = useState(0);
+    const [totalStars, setTotalStars] = useState(0);
 
-    // Stats (Mocked or Calculated)
+    // Stats
     const stats = [
         { label: "Total Contributions", value: totalContributions, icon: GitCommit, color: "text-emerald-400" },
-        { label: "Current Streak", value: 12, icon: Zap, color: "text-yellow-400" },
-        { label: "Repositories", value: 45, icon: GitPullRequest, color: "text-blue-400" },
-        { label: "Stars Earned", value: 128, icon: Star, color: "text-purple-400" },
+        { label: "Current Streak", value: currentStreak, icon: Zap, color: "text-yellow-400" },
+        { label: "Repositories", value: repoCount, icon: GitPullRequest, color: "text-blue-400" },
     ];
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('https://github-contributions-api.jogruber.de/v4/AnshitSharma?y=last');
-                const json = await response.json();
+                // 1. Fetch Contributions & Streak
+                const contribResponse = await fetch('https://github-contributions-api.jogruber.de/v4/AnshitSharma?y=last');
+                const contribJson = await contribResponse.json();
 
-                if (json.contributions) {
-                    setData(json.contributions);
-                    const total = json.contributions.reduce((acc: number, curr: any) => acc + curr.count, 0);
+                if (contribJson.contributions) {
+                    setData(contribJson.contributions);
+
+                    // Calculate Total Contributions
+                    const total = contribJson.contributions.reduce((acc: number, curr: any) => acc + curr.count, 0);
                     setTotalContributions(total);
+
+                    // Calculate Current Streak
+                    let streak = 0;
+                    // Iterate backwards from the last day
+                    // Note: The API returns the full year, ending today/yesterday.
+                    // We need to check from the end.
+                    const reversed = [...contribJson.contributions].reverse();
+                    // Check if today has contributions, if not, check if yesterday has.
+                    // If neither, streak is 0.
+                    // Actually, let's just count consecutive days with count > 0 from the end.
+                    // However, if today is 0, the streak might still be valid if yesterday was > 0 (streak didn't break yet).
+                    // But for simplicity, let's just count consecutive days from the end that have count > 0.
+                    // Wait, if today is 0, we should skip it if we want to be lenient, but strictly speaking streak is active if we contributed today OR yesterday.
+
+                    // Let's find the index of the last contribution.
+                    // If the last day in the array is today, and count is 0, we check yesterday.
+
+                    let i = 0;
+                    // Skip today if it has 0 contributions (streak might be from yesterday)
+                    if (reversed[0].count === 0) {
+                        i = 1;
+                    }
+
+                    for (; i < reversed.length; i++) {
+                        if (reversed[i].count > 0) {
+                            streak++;
+                        } else {
+                            break;
+                        }
+                    }
+                    setCurrentStreak(streak);
                 }
+
+                // 2. Fetch User Info (Repo Count)
+                const userResponse = await fetch('https://api.github.com/users/AnshitSharma');
+                const userJson = await userResponse.json();
+                if (userJson.public_repos) {
+                    setRepoCount(userJson.public_repos);
+                }
+
+                // 3. Fetch Stars (Iterate over repos)
+                // Note: This might hit rate limits if user has MANY repos, but for < 100 it's one call.
+                const reposResponse = await fetch('https://api.github.com/users/AnshitSharma/repos?per_page=100&type=owner');
+                const reposJson = await reposResponse.json();
+                if (Array.isArray(reposJson)) {
+                    const stars = reposJson.reduce((acc: number, repo: any) => acc + repo.stargazers_count, 0);
+                    setTotalStars(stars);
+                }
+
             } catch (error) {
-                console.error("Failed to fetch GitHub contributions", error);
+                console.error("Failed to fetch GitHub data", error);
             } finally {
                 setLoading(false);
             }
@@ -66,7 +119,7 @@ export default function ContributionGraph() {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
                         {stats.map((stat, index) => (
                             <StatCard key={index} stat={stat} index={index} />
                         ))}
