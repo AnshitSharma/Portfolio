@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
+import SelectedWorks from "@/components/SelectedWorks";
 import Skills from "@/components/Skills";
 import ContributionGraph from "@/components/ContributionGraph";
 import Contact from "@/components/Contact";
@@ -10,7 +10,7 @@ export default function Home() {
     <main>
       <Hero />
       <Experience />
-      <Projects />
+      <SelectedWorks />
       <Skills />
       <ContributionGraph />
       <Contact />
