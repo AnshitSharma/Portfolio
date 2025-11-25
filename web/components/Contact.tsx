@@ -32,7 +32,7 @@ export default function Contact() {
                 <div className="flex gap-8 md:gap-16 text-sm md:text-base uppercase tracking-widest text-zinc-500">
                     <a href="https://linkedin.com/in/anshitsharma" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
                     <a href="https://github.com/AnshitSharma" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-                    <a href="#" className="hover:text-white transition-colors">Resume</a>
+                    <a href="https://drive.google.com/file/d/1VoXJA6BPGrDrP6JHqNkmw4tQR3eF67jH/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Resume</a>
                 </div>
             </div>
 
