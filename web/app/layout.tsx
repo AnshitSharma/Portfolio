@@ -4,6 +4,8 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import Spotlight from "@/components/Spotlight";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 
 const outfit = Outfit({
@@ -17,7 +19,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Anshit Sharma | Frontend Developer",
+  title: "Anshit Sharma | Fullstack Developer",
   description: "Personal portfolio of Anshit Sharma, a Frontend Developer & UI Designer based in New Delhi.",
 };
 
@@ -35,7 +37,9 @@ export default function RootLayout({
         <Spotlight />
         <SmoothScroll>
           <div className="noise-bg" />
+          <Navbar />
           {children}
+          <Footer />
           <Analytics />
         </SmoothScroll>
       </body>

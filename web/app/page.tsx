@@ -8,12 +8,20 @@ import Contact from "@/components/Contact";
 export default function Home() {
   return (
     <main>
-      <Hero />
+      <div id="hero">
+        <Hero />
+      </div>
+      <div id="work">
+        <SelectedWorks />
+      </div>
       <Experience />
-      <SelectedWorks />
-      <Skills />
+      <div id="skills">
+        <Skills />
+      </div>
       <ContributionGraph />
-      <Contact />
+      <div id="contact">
+        <Contact />
+      </div>
     </main>
   );
 }
