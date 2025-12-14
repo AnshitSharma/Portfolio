@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowUp, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
 export default function Footer() {
@@ -64,7 +64,7 @@ export default function Footer() {
                             <MagneticSocialLink href="https://github.com/AnshitSharma" label="GITHUB" icon={<Github className="w-5 h-5" />} />
                             <MagneticSocialLink href="https://linkedin.com/in/anshitsharma" label="LINKEDIN" icon={<Linkedin className="w-5 h-5" />} />
                             <MagneticSocialLink href="mailto:anshitsharma82002@gmail.com" label="EMAIL" icon={<Mail className="w-5 h-5" />} />
-                            <MagneticSocialLink href="https://twitter.com" label="TWITTER" icon={<Twitter className="w-5 h-5" />} />
+
                         </div>
                     </div>
                 </div>
