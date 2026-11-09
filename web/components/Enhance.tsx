@@ -201,58 +201,6 @@ export default function Enhance() {
       on(svg, "pointerleave", () => { tip.hidden = true; });
     }
 
-    // Fig. 0: time this very page load, from the browser's own Navigation and Resource Timing.
-    const trace = () => {
-      const fig = $("#trace");
-      if (!fig) return;
-      const total = $('[data-t="total"]', fig), cap = $('[data-t="note"]', fig);
-      const nav = performance.getEntriesByType?.("navigation")[0] as PerformanceNavigationTiming | undefined;
-      if (!nav || !total || !cap) {
-        if (cap) cap.textContent = "Your browser doesn’t share load timings, so there is nothing to draw.";
-        return;
-      }
-      const res = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
-      const span = (list: PerformanceResourceTiming[]): [number, number] | null =>
-        list.length ? [Math.min(...list.map((r) => r.startTime)), Math.max(...list.map((r) => r.responseEnd))] : null;
-      const parts: Record<string, [number, number] | null> = {
-        dns: [nav.domainLookupStart, nav.domainLookupEnd],
-        conn: [nav.connectStart, nav.connectEnd],
-        wait: [nav.requestStart, nav.responseStart],
-        html: [nav.responseStart, nav.responseEnd],
-        fonts: span(res.filter((r) => /\.woff2?($|\?)/.test(r.name))),
-        js: span(res.filter((r) => /\.js($|\?)/.test(r.name))),
-      };
-      const end = nav.loadEventStart || nav.domContentLoadedEventEnd || nav.responseEnd;
-      const max = Math.max(end, ...Object.values(parts).map((p) => (p ? p[1] : 0)), 1);
-      // Three equal steps on the axis, each a round number.
-      let step = 1;
-      for (const m of [1, 2, 2.5, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000, 10000, 20000]) { step = m; if (m * 3 >= max) break; }
-      const scale = step * 3;
-      const ms = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(2)} s` : `${Math.round(v)} ms`);
-      $$("li[data-k]", fig).forEach((li) => {
-        const p = parts[li.dataset.k ?? ""], v = $(".tr-v", li);
-        if (!v) return;
-        if (!p || p[1] < p[0]) { v.textContent = "–"; li.style.setProperty("--w", "0%"); return; }
-        li.style.setProperty("--a", `${((p[0] / scale) * 100).toFixed(2)}%`);
-        li.style.setProperty("--w", `${(((p[1] - p[0]) / scale) * 100).toFixed(2)}%`);
-        v.textContent = ms(p[1] - p[0]);
-      });
-      $$(".tr-ticks span", fig).forEach((s, i) => {
-        s.style.left = `${(i / 3) * 100}%`;
-        s.textContent = i === 3 ? ms(scale) : `${Math.round(step * i)}`;
-      });
-      fig.style.setProperty("--end", `${((end / scale) * 100).toFixed(2)}%`);
-      total.textContent = ms(end);
-      const bytes = res.reduce((a, r) => a + (r.transferSize || 0), nav.transferSize || 0);
-      cap.textContent = bytes > 4096
-        ? `Timed by your browser as the page loaded; the dashed line is when it finished. ${Math.round(bytes / 1024)} KB came over the network.`
-        : "Timed by your browser as the page loaded; the dashed line is when it finished. Almost all of it came from your browser’s cache.";
-      fig.classList.add("ok");
-      if (!reduce) play(fig);
-    };
-    if (document.readyState === "complete") timers.push(window.setTimeout(trace, 0));
-    else on(window, "load", () => timers.push(window.setTimeout(trace, 0)), { once: true });
-
     return () => {
       ac.abort();
       observers.forEach((o) => o.disconnect());

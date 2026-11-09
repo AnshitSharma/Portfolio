@@ -1,5 +1,5 @@
 /* A printed monograph on black. Every section opens like a chapter, with a giant serif head over hairline rules.
-   The only pictures are paper plates: the visitor's own page load (Fig. 0), each system as a process line
+   The only pictures are paper plates: each system as a process line
    read stop by stop, the route timeline drawn to scale, and a year of GitHub activity. */
 :root{
   --bg:#000000;          /* the page */
@@ -71,37 +71,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero h1 .ln>span{display:inline-block}
 .fn-mark{position:relative;top:.1em;margin-left:.04em;font-size:.42em;line-height:1;vertical-align:top;text-decoration:none}
 .tag{grid-column:2;grid-row:1;align-self:start;margin-top:clamp(8px,1.1vw,20px);font-size:14px;line-height:1.75;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-2)}
-.hero-foot{grid-column:1/-1;position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,37rem);align-items:start;gap:36px clamp(40px,5vw,80px);
+.hero-foot{grid-column:1/-1;position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end;gap:28px 48px;
   margin-top:clamp(30px,4vw,56px);padding-top:clamp(24px,3vw,38px)}
 .hero-foot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule);transform-origin:0 50%}
-.hero-l{display:grid;align-content:start;gap:clamp(28px,3vw,44px)}
 .lede{font-size:clamp(22px,2vw,28px);line-height:1.38;max-width:33ch;text-wrap:pretty}
-.acts{display:flex;flex-wrap:wrap;gap:18px 40px}
+.acts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:18px 40px}
 .fn{grid-column:1/-1;margin-top:26px;font-size:15px;color:var(--fg-3);scroll-margin-top:160px}
 .fn:target{animation:mark 2.4s ease-out}
 @keyframes mark{from,30%{color:var(--fg)}}
 
-/* Fig. 0: the visitor's own page load */
-.trace{padding:20px clamp(18px,2vw,26px) 0}
-.tr-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--plate-rule)}
-.tr-h{font-size:19px;line-height:1.2}
-.tr-total{font-size:clamp(32px,2.8vw,42px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
-.tr-rows{list-style:none;padding:8px 0 0}
-.tr-rows li,.tr-axis{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr) 4.2rem;align-items:center;column-gap:14px}
-.tr-rows li{min-height:31px;font-size:16px;line-height:1.25}
-.tr-l{color:var(--plate-2)}
-.tr-track{position:relative;align-self:stretch;min-height:31px;
-  background:linear-gradient(90deg,var(--plate-rule) 1px,transparent 1px) 0 0/33.333% 100%;box-shadow:inset -1px 0 var(--plate-rule)}
-.tr-track i{position:absolute;top:50%;left:var(--a,0%);width:max(var(--w,0%),2px);height:7px;margin-top:-3.5px;background:var(--plate-ink);border-radius:1px;transform-origin:0 50%}
-.trace:not(.ok) .tr-track i{display:none}
-/* the moment the page finished loading, dashed through every row */
-.trace.ok .tr-track::after{content:"";position:absolute;top:0;bottom:0;left:var(--end,100%);border-left:1px dashed var(--plate-ink)}
-.tr-v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.tr-axis{padding-top:4px;font-size:13px;line-height:1.2;color:var(--plate-2);font-variant-numeric:tabular-nums}
-.tr-ticks{position:relative;grid-column:2;height:1.2em}
-.tr-ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
-.tr-ticks span:first-child{transform:none}
-.tr-ticks span:last-child{transform:translateX(-100%)}
 
 /* ---------- chapters ---------- */
 .chapter{padding-block:clamp(104px,13vw,184px) 0}
@@ -143,7 +121,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .plate figcaption{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 24px;
   margin-top:clamp(18px,2.4vw,30px);padding-block:12px 14px;border-top:1px solid var(--plate-rule);font-size:15px;line-height:1.4;color:var(--plate-2)}
 .plate figcaption .it{font-size:18px;color:var(--plate-ink)}
-.trace figcaption{margin-top:10px}
 .cap{flex:1 1 20rem;min-width:0}
 .cap-live{display:none;color:var(--plate-ink)}
 .cap.live .cap-def{display:none}
@@ -310,7 +287,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .tag{animation:fadeup .9s var(--ease) .55s both}
   .hero-foot::before{animation:grow 1.3s var(--ease) .5s both}
   .hero-foot>*,.fn{animation:fadeup .9s var(--ease) .8s both}
-  .trace.play .tr-track i{animation:grow .9s var(--ease) calc(var(--i,0) * .1s) both}
 
   .plate.pre .strip::before,.plate.pre .was .lab::after{transform:scaleX(0)}
   .plate.pre .strip li{opacity:0}
@@ -346,7 +322,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .tag{grid-column:1;grid-row:1;margin:0 0 20px}
   .hero h1{grid-row:2}
   .hero-foot{grid-template-columns:minmax(0,1fr)}
-  .trace{max-width:40rem}
+  .acts{justify-content:flex-start}
   .chap-head,.about,.talk{grid-template-columns:minmax(0,1fr)}
   .pan .tl{width:1000px;max-width:none}
   .lg-pan .lg-svg{width:760px;max-width:none}
@@ -361,10 +337,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .brand{font-size:20px}
   .nav{width:100%;font-size:15px}
   .nav li+li::before{margin-inline:.6em}
-  .tr-rows li{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 16px;row-gap:2px;padding-top:6px}
-  .tr-track{grid-column:1/-1;grid-row:2;min-height:16px;box-shadow:none;background:linear-gradient(var(--plate-rule),var(--plate-rule)) 0 50%/100% 1px no-repeat}
-  .tr-axis{grid-template-columns:minmax(0,1fr)}
-  .tr-ticks{grid-column:1}
   .work summary{grid-template-columns:minmax(0,1fr) auto;align-items:start}
   .w-text{grid-column:1/-1;grid-row:2}
   .tog{grid-column:2;grid-row:1;width:44px;height:44px}

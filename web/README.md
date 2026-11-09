@@ -23,7 +23,6 @@ npm run build && npm start
 
 ## The figures
 
-- **Fig. 0** in the opening section times the visitor's own page load with the Navigation and Resource Timing APIs, and shows it as a waterfall.
 - **Fig. 1 to 6** draw each system as a line of stops, with what it replaced struck through. Pointing at a stop puts its explanation in the caption. On phones the line turns vertical and every explanation is shown.
 - **The route** is the timeline, drawn to scale. Hovering a job lights its stretch of the line, and the other way round.
 - **On GitHub** is a year of contributions, one square per day.
