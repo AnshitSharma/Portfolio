@@ -1,96 +1,60 @@
-"use client";
+import type { CSSProperties } from "react";
+import { site } from "@/lib/content";
 
-import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import TechBackground from "./TechBackground";
-import RoleRotator from "./RoleRotator";
+// Fig. 0 is filled in by the browser after load, from the Navigation and Resource Timing APIs.
+const steps = [
+  ["dns", "Find the server"],
+  ["conn", "Open a connection"],
+  ["wait", "Wait for the server"],
+  ["html", "Download the page"],
+  ["fonts", "Load the fonts"],
+  ["js", "Load the scripts"],
+];
 
 export default function Hero() {
-    return (
-        <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
-            <TechBackground />
-
-            <div className="max-w-[100rem] z-10 mt-20">
-                {/* Role Label */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="flex items-center gap-4 mb-8"
-                >
-                    <div className="h-[1px] w-12 bg-zinc-500" />
-                    <RoleRotator />
-                </motion.div>
-
-                {/* Massive Typography Name */}
-                <div className="flex flex-col leading-[0.85] tracking-tighter">
-                    <div className="overflow-hidden">
-                        <motion.h1
-                            initial={{ y: "100%" }}
-                            animate={{ y: 0 }}
-                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                            className="text-[12vw] md:text-[11vw] font-serif font-medium text-zinc-100 mix-blend-difference"
-                        >
-                            ANSHIT
-                        </motion.h1>
-                    </div>
-                    <div className="overflow-hidden self-end md:self-auto md:ml-[15vw]">
-                        <motion.h1
-                            initial={{ y: "100%" }}
-                            animate={{ y: 0 }}
-                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                            className="text-[12vw] md:text-[11vw] font-sans font-bold text-zinc-100 mix-blend-difference"
-                        >
-                            SHARMA
-                        </motion.h1>
-                    </div>
-                </div>
-
-                {/* Bottom Details */}
-                <div className="flex flex-col md:flex-row justify-between items-end mt-12 md:mt-24 gap-8">
-                    <div className="flex flex-col gap-6">
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="max-w-md text-lg md:text-xl text-zinc-400 font-light leading-relaxed"
-                        >
-                            Based in <span className="text-zinc-100 font-medium">New Delhi, India</span>.
-                            Specializing in <span className="text-zinc-200">Java, React, & Node.js</span>.
-                            Building scalable backend services and responsive UI components.
-                        </motion.p>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.5 }}
-                            className="flex gap-4"
-                        >
-                            <a href="https://github.com/AnshitSharma" target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
-                                <Github className="w-5 h-5 text-zinc-300" />
-                            </a>
-                            <a href="https://linkedin.com/in/anshitsharma" target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
-                                <Linkedin className="w-5 h-5 text-zinc-300" />
-                            </a>
-                            <a href="mailto:anshitsharma82002@gmail.com" className="p-2 bg-zinc-900/50 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
-                                <Mail className="w-5 h-5 text-zinc-300" />
-                            </a>
-                        </motion.div>
-                    </div>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                        className="flex items-center gap-4"
-                    >
-                        <div className="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center animate-bounce">
-                            <ArrowDown className="w-5 h-5 text-zinc-400" />
-                        </div>
-                        <span className="text-sm text-zinc-500 uppercase tracking-widest hidden md:block">Scroll</span>
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section className="hero wrap" id="top" aria-labelledby="hero-h">
+      <h1 id="hero-h">
+        <span className="ln"><span>Backend /</span></span>
+        <span className="ln"><span>In production<a className="fn-mark" href="#fn" aria-label="Footnote">*</a></span></span>
+      </h1>
+      <p className="tag">Backend engineer<br />Bharat Datacenter<br />New Delhi</p>
+      <div className="hero-foot">
+        <div className="hero-l">
+          <p className="lede">I build the internal systems behind a cloud and hosting provider, from hardware inventory to deploy pipelines. 2.5+ years of experience, internships included.</p>
+          <div className="acts">
+            <a className="u ar ar-s" href="#work">See the work</a>
+            {site.resume ? (
+              <a className="u ar ar-ne" href={site.resume} target="_blank" rel="noopener">Resume (PDF)</a>
+            ) : (
+              <a className="u ar ar-s" href="#contact">Get in touch</a>
+            )}
+          </div>
+        </div>
+        <figure className="plate trace" id="trace" aria-labelledby="trace-h">
+          <div className="tr-head">
+            <p className="tr-h" id="trace-h">This page, on its way to you</p>
+            <p className="tr-total" data-t="total" aria-live="polite">&hellip;</p>
+          </div>
+          <ol className="tr-rows">
+            {steps.map(([k, label], i) => (
+              <li key={k} data-k={k} style={{ "--i": i } as CSSProperties}>
+                <span className="tr-l">{label}</span>
+                <span className="tr-track"><i /></span>
+                <span className="tr-v">&hellip;</span>
+              </li>
+            ))}
+          </ol>
+          <div className="tr-axis" aria-hidden="true">
+            <span className="tr-ticks"><span /><span /><span /><span /></span>
+          </div>
+          <figcaption>
+            <span className="it">Fig. 0</span>
+            <span className="cap" data-t="note">Timed by your browser as the page loads.</span>
+          </figcaption>
+        </figure>
+      </div>
+      <p className="fn" id="fn">* The provisioning platform is still in pre-production.</p>
+    </section>
+  );
 }

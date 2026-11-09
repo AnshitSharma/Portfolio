@@ -1,47 +1,46 @@
-import type { Metadata } from "next";
-import { Outfit, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
-import Spotlight from "@/components/Spotlight";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
+import { site } from "@/lib/content";
+import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
+// Newsreader, self-hosted and cut down to Latin text. The roman keeps its optical-size axis,
+// so the giant headings and the small captions each get the cut drawn for their size.
+const serif = localFont({
+  src: [
+    { path: "./fonts/newsreader-roman.woff2", style: "normal", weight: "400" },
+    { path: "./fonts/newsreader-italic.woff2", style: "italic", weight: "400" },
+  ],
+  variable: "--font-serif",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-});
+const title = "Anshit Sharma, backend engineer";
+const description =
+  "Backend engineer in New Delhi. Inventory, deploy pipelines, a data pipeline, a CRM integration and provisioning automation, built at Bharat Datacenter.";
 
 export const metadata: Metadata = {
-  title: "Anshit Sharma | Fullstack Developer",
-  description: "Personal portfolio of Anshit Sharma, a Frontend Developer & UI Designer based in New Delhi.",
+  metadataBase: new URL(site.url),
+  title,
+  description,
+  alternates: { canonical: "/" },
+  openGraph: { title, description, url: "/", siteName: "Anshit Sharma", type: "website", locale: "en_IN" },
+  twitter: { card: "summary", title, description },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
+  viewportFit: "cover",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${outfit.variable} ${playfair.variable} antialiased`}
-      >
-        <CustomCursor />
-        <Spotlight />
-        <SmoothScroll>
-          <div className="noise-bg" />
-          <Navbar />
-          {children}
-          <Footer />
-          <Analytics />
-        </SmoothScroll>
+    <html lang="en-IN" className={serif.variable}>
+      <body>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
